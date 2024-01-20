@@ -56,7 +56,7 @@ def opponent_random_choice(playability_arrays):
             while opponent in chosen_teams:
                 opponent = random.choice(value)
             else:
-                final_array.append([entry, opponent])
+                final_array.append((entry, opponent))
                 chosen_teams.append(opponent)
                 chosen_teams.append(entry)
     return final_array
