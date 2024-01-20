@@ -37,6 +37,16 @@ def map_only_playable(playability_matrix):
     return playability_matrix
 
 
+def convert_to_table(playability_matrix):
+    new_playability_matrix = {}
+    for entry, value in playability_matrix.items():
+        new_playability_matrix[entry] = []
+        for counter_team in value:
+            new_playability_matrix[entry].append(counter_team)
+
+    return new_playability_matrix
+
+
 teams = [
     Team("Manchester City", "EN", 1, "A"),
     Team("Paris Saint-Germain", "FR", 2, "A"),
@@ -56,4 +66,4 @@ teams = [
     Team("Chelsea", "EN", 2, "H")
 ]
 
-print(map_only_playable(create_playability_matrix(teams)))
+print(convert_to_table(map_only_playable(create_playability_matrix(teams))))
