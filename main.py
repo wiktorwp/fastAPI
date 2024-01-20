@@ -7,6 +7,20 @@ class Team:
         self.previous_group = previous_group
 
 
+def create_playability_matrix(teams_array):
+    matrix = {}
+    for team in teams_array:
+        matrix[team.name] = {}
+        for counter_team in teams_array:
+            if counter_team.country == team.country \
+                    or counter_team.placement != team.placement \
+                    or counter_team.previous_group == team.previous_group:
+                matrix[team.name][counter_team.name] = 0
+            else:
+                matrix[team.name][counter_team.name] = 1
+    return matrix
+
+
 teams = [
     Team("Manchester City", "EN", 1, "A"),
     Team("Paris Saint-Germain", "FR", 2, "A"),
@@ -26,4 +40,4 @@ teams = [
     Team("Chelsea", "EN", 2, "H")
 ]
 
-print(teams)
+print(create_playability_matrix(teams))
