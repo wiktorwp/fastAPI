@@ -95,11 +95,15 @@ teams = [
 lineup = []
 
 # Creates new lineup array and returns it
-@app.post("/items/")
+@app.post("/lineup")
 async def create_teams_lineup(teams_array_model: TeamsArrayModel):
     global lineup
     lineup = opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams_array_model.teams))))
     return lineup
 
+@app.get("/lineup")
+async def get_teams_lineup(teams_array_model: TeamsArrayModel):
+    global lineup
+    return lineup
 
 # print(opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams)))))
