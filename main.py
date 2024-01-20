@@ -47,6 +47,21 @@ def convert_to_table(playability_matrix):
     return new_playability_matrix
 
 
+def opponent_random_choice(playability_arrays):
+    final_array = []
+    chosen_teams = []
+    for entry, value in playability_arrays.items():
+        if entry not in chosen_teams:
+            counter_team = random.choice(value)
+            while counter_team in chosen_teams:
+                counter_team = random.choice(value)
+            else:
+                final_array.append([entry, random.choice(value)])
+                chosen_teams.append(counter_team)
+                chosen_teams.append(entry)
+    return final_array
+
+
 teams = [
     Team("Manchester City", "EN", 1, "A"),
     Team("Paris Saint-Germain", "FR", 2, "A"),
@@ -66,4 +81,4 @@ teams = [
     Team("Chelsea", "EN", 2, "H")
 ]
 
-print(convert_to_table(map_only_playable(create_playability_matrix(teams))))
+print(opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams)))))
