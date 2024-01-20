@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+
 class Team():
     def __init__(self, name, country, placement, previous_group):
         self.name = name
@@ -11,14 +12,17 @@ class Team():
         self.placement = placement
         self.previous_group = previous_group
 
+
 class TeamModel(BaseModel):
     name: str
     country: str
     placement: int
     previous_group: str
 
+
 class TeamsArrayModel(BaseModel):
     teams: list[TeamModel]
+
 
 def create_playability_matrix(teams_array):
     matrix = {}
@@ -94,16 +98,31 @@ teams = [
 
 lineup = []
 
+
 # Creates new lineup array and returns it
 @app.post("/lineup")
 async def create_teams_lineup(teams_array_model: TeamsArrayModel):
     global lineup
-    lineup = opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams_array_model.teams))))
+    lineup = opponent_random_choice(
+        convert_to_table(map_only_playable(create_playability_matrix(teams_array_model.teams))))
     return lineup
 
+
 @app.get("/lineup")
-async def get_teams_lineup(teams_array_model: TeamsArrayModel):
+async def get_teams_lineup():
     global lineup
     return lineup
+
+
+@app.get("/lineup/{team_name}")
+async def get_team_lineup(team_name: str):
+    for team_lineup in lineup:
+        if team_name in team_lineup:
+            if team_lineup[0] == team_name:
+                return team_lineup[1]
+            else:
+                return team_lineup[0]
+
+    return "No such team found"
 
 # print(opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams)))))
