@@ -13,13 +13,13 @@ def create_playability_matrix(teams_array):
     matrix = {}
     for team in teams_array:
         matrix[team.name] = {}
-        for counter_team in teams_array:
-            if counter_team.country == team.country \
-                    or counter_team.placement != team.placement \
-                    or counter_team.previous_group == team.previous_group:
-                matrix[team.name][counter_team.name] = 0
+        for opponent in teams_array:
+            if opponent.country == team.country \
+                    or opponent.placement != team.placement \
+                    or opponent.previous_group == team.previous_group:
+                matrix[team.name][opponent.name] = 0
             else:
-                matrix[team.name][counter_team.name] = 1
+                matrix[team.name][opponent.name] = 1
     return matrix
 
 
@@ -41,8 +41,8 @@ def convert_to_table(playability_matrix):
     new_playability_matrix = {}
     for entry, value in playability_matrix.items():
         new_playability_matrix[entry] = []
-        for counter_team in value:
-            new_playability_matrix[entry].append(counter_team)
+        for opponent in value:
+            new_playability_matrix[entry].append(opponent)
 
     return new_playability_matrix
 
@@ -52,12 +52,12 @@ def opponent_random_choice(playability_arrays):
     chosen_teams = []
     for entry, value in playability_arrays.items():
         if entry not in chosen_teams:
-            counter_team = random.choice(value)
-            while counter_team in chosen_teams:
-                counter_team = random.choice(value)
+            opponent = random.choice(value)
+            while opponent in chosen_teams:
+                opponent = random.choice(value)
             else:
-                final_array.append([entry, counter_team])
-                chosen_teams.append(counter_team)
+                final_array.append([entry, opponent])
+                chosen_teams.append(opponent)
                 chosen_teams.append(entry)
     return final_array
 
