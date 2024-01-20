@@ -5,7 +5,7 @@ from pydantic import BaseModel
 app = FastAPI()
 
 
-class Team():
+class Team:
     def __init__(self, name, country, placement, previous_group):
         self.name = name
         self.country = country
