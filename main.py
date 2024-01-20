@@ -1,13 +1,24 @@
 import random
+from fastapi import FastAPI
+from pydantic import BaseModel
 
+app = FastAPI()
 
-class Team:
+class Team():
     def __init__(self, name, country, placement, previous_group):
         self.name = name
         self.country = country
         self.placement = placement
         self.previous_group = previous_group
 
+class TeamModel(BaseModel):
+    name: str
+    country: str
+    placement: int
+    previous_group: str
+
+class TeamsArrayModel(BaseModel):
+    teams: list[TeamModel]
 
 def create_playability_matrix(teams_array):
     matrix = {}
@@ -81,4 +92,14 @@ teams = [
     Team("Chelsea", "EN", 2, "H")
 ]
 
-print(opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams)))))
+lineup = []
+
+# Creates new lineup array and returns it
+@app.post("/items/")
+async def create_teams_lineup(teams_array_model: TeamsArrayModel):
+    global lineup
+    lineup = opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams_array_model.teams))))
+    return lineup
+
+
+# print(opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams)))))
