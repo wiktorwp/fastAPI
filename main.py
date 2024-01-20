@@ -99,6 +99,7 @@ teams = [
 lineup = []
 saved_teams = []
 
+
 # Creates new lineup array and returns it
 @app.post("/lineup")
 async def create_teams_lineup(teams_array_model: TeamsArrayModel):
@@ -127,12 +128,12 @@ async def get_team_lineup(team_name: str):
 
     return "No such team found"
 
+
 @app.patch("/lineup")
 async def reroll_teams_lineup():
     global lineup
     lineup = opponent_random_choice(
         convert_to_table(map_only_playable(create_playability_matrix(saved_teams))))
     return lineup
-
 
 # print(opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams)))))
