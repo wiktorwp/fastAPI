@@ -1,3 +1,5 @@
+import random
+
 
 class Team:
     def __init__(self, name, country, placement, previous_group):
@@ -21,6 +23,20 @@ def create_playability_matrix(teams_array):
     return matrix
 
 
+def filter_playable(team_playability_matrix):
+    entry, value = team_playability_matrix
+    if value == 0:
+        return False
+    else:
+        return True
+
+
+def map_only_playable(playability_matrix):
+    for entry, value in playability_matrix.items():
+        playability_matrix[entry] = dict(filter(filter_playable, value.items()))
+    return playability_matrix
+
+
 teams = [
     Team("Manchester City", "EN", 1, "A"),
     Team("Paris Saint-Germain", "FR", 2, "A"),
@@ -40,4 +56,4 @@ teams = [
     Team("Chelsea", "EN", 2, "H")
 ]
 
-print(create_playability_matrix(teams))
+print(map_only_playable(create_playability_matrix(teams)))
