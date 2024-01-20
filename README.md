@@ -1,6 +1,10 @@
 # Simple teams lineup maker with python fastAPI
 
-This app randomly generates lineups for the knockout stage of footbal cup with given teams data in a JSON format
+This app randomly generates lineups for the knockout stage of footbal cup with given teams data in a JSON format  
+### To run app use uvicorn
+```
+uvicorn main:app
+```
 
 # Endpoints
 
