@@ -30,7 +30,7 @@ def create_playability_matrix(teams_array):
         matrix[team.name] = {}
         for opponent in teams_array:
             if opponent.country == team.country \
-                    or opponent.placement != team.placement \
+                    or opponent.placement == team.placement \
                     or opponent.previous_group == team.previous_group:
                 matrix[team.name][opponent.name] = 0
             else:
@@ -136,4 +136,4 @@ async def reroll_teams_lineup():
         convert_to_table(map_only_playable(create_playability_matrix(saved_teams))))
     return lineup
 
-# print(opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams)))))
+print(opponent_random_choice(convert_to_table(map_only_playable(create_playability_matrix(teams)))))
